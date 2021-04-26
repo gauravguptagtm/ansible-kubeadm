@@ -74,5 +74,4 @@ Run this playbook for provision cluster
 
 ```sh
 $ ansible-playbook role-kube.yml
-
-'''
+```

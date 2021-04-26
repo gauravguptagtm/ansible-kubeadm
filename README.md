@@ -75,3 +75,19 @@ Run this playbook for provision cluster
 ```sh
 $ ansible-playbook role-kube.yml
 ```
+![image](https://user-images.githubusercontent.com/46498235/116075598-c6851f00-a6b0-11eb-943e-7c8bf7045c9c.png)
+
+![image](https://user-images.githubusercontent.com/46498235/116075663-d69cfe80-a6b0-11eb-8e83-afd5015e98c0.png)
+
+![image](https://user-images.githubusercontent.com/46498235/116075711-e74d7480-a6b0-11eb-97f1-aec5a2d17467.png)
+
+![image](https://user-images.githubusercontent.com/46498235/116075741-f2a0a000-a6b0-11eb-9c58-0ca44727868d.png)
+
+![image](https://user-images.githubusercontent.com/46498235/116075786-fdf3cb80-a6b0-11eb-95ca-b417c4e87f2e.png)
+
+Now, Verify cluster running using Kubectl command in master node:
+
+```sh
+$ kubectl get nodes
+```
+![image](https://user-images.githubusercontent.com/46498235/116076414-d2bdac00-a6b1-11eb-9a72-9b91fb95bba1.png)

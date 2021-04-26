@@ -14,7 +14,8 @@ System requirements:
 
 # Usage
 
-Add the system information gathered above into a file called `hosts`. For example:
+Add the system information gathered above into a file called `hosts`. You must have connectivity between all the nodes. We can use Multi-Cloud to launch the instance also either for master or slave node. 
+For example:
 ```
 [master]
 #ip_of_master_node

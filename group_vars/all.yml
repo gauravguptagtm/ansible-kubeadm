@@ -1,0 +1,13 @@
+---
+#variable file for cluster
+
+
+pod_network_cidr: "10.244.0.0/16"
+
+# Network implementation('flannel', 'weave')
+network: weave
+
+# Container runtimes ('docker', 'crio')
+container_runtime: docker
+
+

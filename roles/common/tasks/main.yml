@@ -1,0 +1,20 @@
+---
+# tasks file for common
+- name: Disable selinux so it doesn't conflict 
+  selinux:
+    state: disabled
+  when: ansible_os_family == "RedHat"
+- name: Disable Swap Memory
+  shell: swapoff -a
+- name: Disable Firewalld so no conflict occur
+  service:
+    name: firewalld
+    state: stopped
+  when: ansible_os_family == "RedHat"
+  ignore_errors: true
+- name: Install Kubeadm on RedHat Distro
+  include_tasks: kube_redhat.yml
+  when: ansible_os_family == "RedHat"
+- name: Install Kubeadm on Debian Distro
+  include_tasks: kube_debian.yml
+  when: ansible_os_family == "Debian"

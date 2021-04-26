@@ -1,0 +1,16 @@
+- name: Install Necessary Software
+  hosts: all
+  vars_files:
+    - group_vars/all.yml
+  roles:
+  -  role: runtime/{{ container_runtime }}-setup
+  -  role: common
+- name: Setup Master node
+  hosts: master
+  roles:
+  -  role: master
+  -  role: cni
+- name: Setup Slave  node
+  hosts: slave
+  roles:
+  -  role: node

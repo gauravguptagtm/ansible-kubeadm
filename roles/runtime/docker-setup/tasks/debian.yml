@@ -1,0 +1,26 @@
+- name: Install required packages
+  apt:
+    pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+- name: add gpg key for docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg 
+    state: present
+- name: Run the equivalent of "apt-get update"
+  apt:
+    update_cache: yes
+- name: Add docker repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu focal  stable"
+    state: present
+    update_cache: yes
+    filename: docker
+- name: Install Docker Software
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes

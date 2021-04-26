@@ -1,0 +1,10 @@
+---
+# tasks file for os-facts
+- name: gather os name
+  ansible.builtin.setup:
+    filter: ansible_os_family
+  register: os_name
+- name: Setting facts so that they will be persisted in the fact cache
+  set_fact:
+    ansible_os_family: "{{ os_name[\"ansible_facts\"][\"ansible_os_family\"] }}"
+

@@ -1,0 +1,3 @@
+---
+# defaults file for node
+dest_path: "/tmp/join_url.sh"

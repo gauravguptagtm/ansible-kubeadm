@@ -1,0 +1,28 @@
+- name: add gpg key for CRIO Repo
+  apt_key:
+    url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key
+    state: present
+- name: add gpg key for CRIO Repo
+  apt_key:
+    url: https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:1.20/xUbuntu_20.04/Release.key
+    state: present
+- name: Run the equivalent of "apt-get update"
+  apt:
+    update_cache: yes
+- name: Add crio repository into sources list-1
+  ansible.builtin.apt_repository:
+    repo: "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /"
+    state: present
+    update_cache: yes
+    filename: devel:kubic:libcontainers:stable
+- name: Add crio repository into sources list-2
+  ansible.builtin.apt_repository:
+    repo: "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.20/xUbuntu_20.04/ /"
+    state: present
+    update_cache: yes
+    filename: devel:kubic:libcontainers:stable:cri-o:1.20
+- name: Install Crio Software
+  apt:
+    name: ['cri-o', 'cri-o-runc']
+    state: present
+    update_cache: yes

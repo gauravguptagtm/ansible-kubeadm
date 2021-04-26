@@ -1,0 +1,8 @@
+- name: fetch the join command
+  shell: kubeadm token create --print-join-command
+  register: join
+- local_action:
+    module: copy
+    content: "{{ join.stdout }}"
+    dest: "{{ dest_path }}"
+    mode: 755

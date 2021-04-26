@@ -1,0 +1,16 @@
+- name: ADD Kube repo
+  yum_repository:
+    name: Kubernetes
+    description: Kubernetes Repo
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch
+    enabled: yes
+    gpgcheck: no
+- name: Install kubeadm
+  yum:
+    name: ['kubeadm', 'kubectl', 'kubelet', 'iproute-tc']
+    state: present
+- name: Start service kubelet, if not started
+  ansible.builtin.service:
+    name: kubelet
+    state: started
+    enabled: yes

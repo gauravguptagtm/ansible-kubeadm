@@ -1,0 +1,38 @@
+---
+# tasks file for crio-setup
+- name: Create the .conf file to load the modules at bootup
+  ansible.builtin.copy:
+    src: files/crio.conf
+    dest: /etc/modules-load.d/crio.conf
+- name: Add the overlay and br_netfilter module
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - overlay
+    - br_netfilter
+- name: configure iproute table
+  sysctl:
+    name: "{{ item.name }}"
+    value: "1"
+    sysctl_file: /etc/sysctl.d/99-kubernetes-cri.conf
+    reload: yes
+  loop:
+    - { name: 'net.bridge.bridge-nf-call-ip6tables' }
+    - { name: 'net.ipv4.ip_forward' }
+    - { name: 'net.bridge.bridge-nf-call-iptables' }
+- name: Install CRIO on RedHat Distro
+  include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+- name: Install CRIO on Debian Distro
+  include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+- name: Just force systemd to reread configs (2.4 and above)
+  ansible.builtin.systemd:
+    daemon_reload: yes
+- name: Restart service crio, in all cases
+  ansible.builtin.service:
+    name: crio
+    state: started
+    enabled: yes
+

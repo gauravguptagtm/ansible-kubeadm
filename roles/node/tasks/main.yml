@@ -1,0 +1,9 @@
+---
+# tasks file for node
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: "{{ dest_path }}"
+    dest: "{{ dest_path }}"
+    mode: '0755'
+- name: run join command in node
+  shell: "{{ dest_path }}"

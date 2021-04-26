@@ -1,0 +1,4 @@
+---
+# either flannel or weave plugin
+
+network: weave

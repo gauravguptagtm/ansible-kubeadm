@@ -1,0 +1,11 @@
+---
+# tasks file for cni
+- name: Install CNI plugin
+  include_tasks: flannel.yml
+  run_once: yes
+  when:  network  == "flannel"
+- name: Install CNI Plugin
+  include_tasks: weave.yml
+  run_once: yes
+  when:  network  == "weave"
+

@@ -1,0 +1,9 @@
+[master]
+#ip_of_master_node
+65.2.35.218
+
+
+[slave]
+#ip_of_slave_node
+65.1.148.102
+

@@ -1,0 +1,27 @@
+- name: Add gpg key for kubernetes repository
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+- name: Run the equivalent of "apt-get update"
+  apt:
+    update_cache: yes
+- name: Add kubernetes repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb  https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    update_cache: yes
+    filename: kubernetes
+- name: Install Kubeadm Software
+  apt:
+    name: ['kubelet', 'kubeadm', 'kubectl']
+    state: present
+    update_cache: yes
+- name: Hold version of software
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+

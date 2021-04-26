@@ -1,0 +1,25 @@
+---
+# tasks file for master
+- name: set container_runtime_file path var if container runtime is crio
+  set_fact:
+    container_runtime_file: "crio/crio"
+  when:  container_runtime == "crio"
+- name: set container_runtime_file path var if container runtime is docker
+  set_fact:
+    container_runtime_file: "dockershim"
+  when:  container_runtime == "docker"
+- name: Init Kubeadm
+  shell: |
+     kubeadm init --pod-network-cidr "{{ pod_network_cidr }}" \
+                  --control-plane-endpoint "{{ master_ip }}" \
+                  --cri-socket /var/run/{{ container_runtime_file }}.sock \
+                  --ignore-preflight-errors=Mem  \
+                  --ignore-preflight-errors=NumCPU \
+                  {{ init_args }}
+  register: init_cluster
+- name: Create kube config directory
+  include_tasks: dir.yml
+  run_once: yes           
+- name: Fetch join url for node to connect
+  include_tasks: fetch_join_url.yml
+  run_once: yes

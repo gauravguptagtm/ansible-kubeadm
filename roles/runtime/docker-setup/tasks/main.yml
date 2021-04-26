@@ -1,0 +1,33 @@
+---
+# tasks file for docker-setup
+- name: Install Docker on RedHat Distro
+  include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+- name: Install Docker on Debian Distro
+  include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+- name: Create a directory if it does not exist
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+- name: change docker driver to systemd
+  copy:
+    src: files/daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 0644
+- name: start docker service
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+    enabled: yes
+- name: configure ipv6 tables
+  sysctl:
+    name: "{{ item.name }}"
+    value: "1"
+    sysctl_file: /etc/sysctl.d/k8s.conf
+    reload: yes
+  loop:
+    - { name: 'net.bridge.bridge-nf-call-ip6tables' }
+    - { name: 'net.bridge.bridge-nf-call-iptables' }
+

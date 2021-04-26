@@ -1,0 +1,4 @@
+---
+# vars file for master
+pod_network_cidr: 10.244.0.0/16
+master_ip: "{{ hostvars[inventory_hostname][\"inventory_hostname\"] }}"

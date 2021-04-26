@@ -1,0 +1,4 @@
+---
+# defaults file for master
+init_args: ""
+dest_path: "/tmp/join_url.sh"

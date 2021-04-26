@@ -1,0 +1,9 @@
+- name: Add Docker repository
+  yum_repository:
+    name: docker
+    description: DOCKER YUM repo
+    file: external_repos
+    baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
+    gpgcheck: no
+- name: Install Docker-CE
+  shell: yum install docker-ce -y  --nobest
